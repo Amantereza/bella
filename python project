@@ -1,0 +1,79 @@
+class Donor:
+    def __init__(self, donor_id, name, email):
+        self.donor_id = donor_id
+        self.name = name
+        self.email = email
+        self.donations = []
+
+    def make_donation(self, cause, amount):
+        donation = Donation(cause, amount)
+        self.donations.append(donation)
+        return donation
+
+
+class Cause:
+    def __init__(self, cause_id, name, description):
+        self.cause_id = cause_id
+        self.name = name
+        self.description = description
+        self.total_donations = 0
+
+    def receive_donation(self, amount):
+        self.total_donations += amount
+
+
+class Donation:
+    def __init__(self, cause, amount):
+        self.cause = cause
+        self.amount = amount
+
+
+class DonationTracker:
+    def __init__(self):
+        self.donors = []
+        self.causes = []
+
+    def add_donor(self, donor):
+        self.donors.append(donor)
+
+    def add_cause(self, cause):
+        self.causes.append(cause)
+
+    def show_donations(self):
+        for donor in self.donors:
+            print(f"Donor: {donor.name}")
+            for donation in donor.donations:
+                print(f"  - Donated ${donation.amount} to {donation.cause.name}")
+        print("\nCauses and their total donations:")
+        for cause in self.causes:
+            print(f"  - {cause.name}: ${cause.total_donations}")
+
+
+# Example usage:
+
+# Creating causes
+health_cause = Cause(1, "Healthcare", "Provide medical assistance to those in need")
+education_cause = Cause(2, "Education", "Support education for underprivileged children")
+
+# Creating a donation tracker
+tracker = DonationTracker()
+
+# Adding causes to the tracker
+tracker.add_cause(health_cause)
+tracker.add_cause(education_cause)
+
+# Creating donors
+donor1 = Donor(1, "Aman Tit", "amantit@gmail.com")
+donor2 = Donor(2, "ding", "ding100@gmail.com.com")
+
+# Adding donors to the tracker
+tracker.add_donor(donor1)
+tracker.add_donor(donor2)
+
+# Making donations
+donor1.make_donation(health_cause, 100)
+donor2.make_donation(education_cause, 50)
+donor1.make_donation(health_cause, 200)
+
+# Showing donations
+tracker.show_donations()
